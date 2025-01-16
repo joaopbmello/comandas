@@ -1,24 +1,47 @@
 package com.webii.comandas.controller;
 
 import com.webii.comandas.domain.Tab;
+import com.webii.comandas.repository.TabRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tabs")
 public class TabController {
-    private final List<Tab> tabs = new ArrayList<>();
 
+    @Autowired
+    private TabRepository tabRepository;
+
+    // Endpoint para listar todas as comandas
     @GetMapping
     public List<Tab> getAllTabs() {
-        return tabs;
+        return tabRepository.findAll();
     }
 
+    // Endpoint para criar uma nova comanda
     @PostMapping
-    public Tab addTab(@RequestBody Tab tab) {
-        tabs.add(tab);
-        return tab;
+    public Tab createTab(@RequestBody Tab tab) {
+        return tabRepository.save(tab);
+    }
+
+    // Endpoint para buscar uma comanda por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Tab> getTabById(@PathVariable Integer id) {
+        return tabRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Endpoint para deletar uma comanda
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTab(@PathVariable Integer id) {
+        if (tabRepository.existsById(id)) {
+            tabRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
