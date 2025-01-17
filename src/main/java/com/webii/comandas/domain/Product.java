@@ -6,22 +6,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private double price;
-
-    @Column(name = "image_url")
     private String imageUrl;
+
+    private String productCode;
+
+    private String unitCode;
+
+    private Double price;
+
+    private Double unitCost;
+
+    private String group;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

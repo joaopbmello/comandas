@@ -6,39 +6,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Tab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(nullable = false)
-    private String customer;
+    private String client;
 
-    @Column(name = "table_number", nullable = false)
-    private int tableNumber;
+    private String status; // Enum no front-end, representado como String aqui.
 
-    @Column(nullable = false)
-    private String status;
+    private Integer selectedTable;
 
     @OneToMany(mappedBy = "tab", cascade = CascadeType.ALL)
-    private List<TabItem> items;
+    private List<TabItem> products;
 
-    @Column(nullable = false)
-    private double total;
+    private Double subtotal;
 
-    @Column(name = "opened_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date openedAt;
+    private LocalDateTime openedAt;
 
-    @Column(name = "closed_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date closedAt;
+    private LocalDateTime closedAt;
 }
