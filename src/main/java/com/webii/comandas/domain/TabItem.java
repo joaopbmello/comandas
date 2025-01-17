@@ -26,5 +26,5 @@ public class TabItem {
 
     private Integer ammount;
 
-    private Double price;
+    private Double subtotal;
 }

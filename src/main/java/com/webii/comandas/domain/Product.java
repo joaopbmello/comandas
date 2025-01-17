@@ -24,13 +24,11 @@ public class Product {
 
     private String productCode;
 
-    private String unitCode;
-
     private Double price;
 
     private Double unitCost;
 
-    private String group;
+    private String groupName;
 
     private LocalDateTime createdAt;
 

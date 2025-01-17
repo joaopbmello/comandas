@@ -19,16 +19,16 @@ public class Tab {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String client;
+    private String customer;
 
-    private String status; // Enum no front-end, representado como String aqui.
+    private String status;
 
-    private Integer selectedTable;
+    private Integer tableNumber;
 
     @OneToMany(mappedBy = "tab", cascade = CascadeType.ALL)
-    private List<TabItem> products;
+    private List<TabItem> items;
 
-    private Double subtotal;
+    private Double total;
 
     private LocalDateTime openedAt;
 
