@@ -1,5 +1,6 @@
 package com.webii.comandas.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,20 +18,28 @@ import java.util.List;
 public class Tab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Integer id;
 
+    @JsonProperty("customer")
     private String customer;
 
+    @JsonProperty("status")
     private String status;
 
+    @JsonProperty("tableNumber")
     private Integer tableNumber;
 
     @OneToMany(mappedBy = "tab", cascade = CascadeType.ALL)
+    @JsonProperty("items")
     private List<TabItem> items;
 
+    @JsonProperty("total")
     private Double total;
 
+    @JsonProperty("openedAt")
     private LocalDateTime openedAt;
 
+    @JsonProperty("closedAt")
     private LocalDateTime closedAt;
 }
