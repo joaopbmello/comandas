@@ -43,4 +43,8 @@ public class Product {
 
     @JsonProperty("updatedAt")
     private LocalDateTime updatedAt;
+
+    public Double getPrice() {
+        return price;
+    }
 }

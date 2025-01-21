@@ -42,4 +42,12 @@ public class Tab {
 
     @JsonProperty("closedAt")
     private LocalDateTime closedAt;
+
+    public List<TabItem> getItems() {
+        return items;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }
