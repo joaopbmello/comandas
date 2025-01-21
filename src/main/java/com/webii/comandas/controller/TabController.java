@@ -44,4 +44,13 @@ public class TabController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Tab> updateCustomerName(@PathVariable Integer id, @RequestBody Tab updatedTab) {
+        return tabRepository.findById(id).map(existingTab -> {
+            existingTab.setCustomer(updatedTab.getCustomer());
+            Tab savedTab = tabRepository.save(existingTab);
+            return ResponseEntity.ok(savedTab);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }
