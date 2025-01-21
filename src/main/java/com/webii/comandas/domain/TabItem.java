@@ -36,23 +36,43 @@ public class TabItem {
     @JsonProperty("subtotal")
     private Double subtotal;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Tab getTab() {
+        return tab;
+    }
+
     public void setTab(Tab tab) {
         this.tab = tab;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    public Integer getAmmount() {
+        return ammount;
+    }
+
     public void setAmmount(Integer ammount) {
         this.ammount = ammount;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
-
     public Double getSubtotal() {
         return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 }

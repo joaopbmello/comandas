@@ -68,7 +68,18 @@ public class TabItemController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTabItem(@PathVariable Integer id) {
         if (tabItemRepository.existsById(id)) {
-            tabItemRepository.deleteById(id);
+            TabItem item = tabItemRepository.findById(id).orElse(null);
+            if (item != null) {
+                Tab tab = item.getTab();
+                tabItemRepository.deleteById(id);
+
+                Double newTotal = tab.getItems().stream()
+                        .filter(i -> !i.getId().equals(id))
+                        .mapToDouble(TabItem::getSubtotal)
+                        .sum();
+                tab.setTotal(newTotal);
+                tabRepository.save(tab);
+            }
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
