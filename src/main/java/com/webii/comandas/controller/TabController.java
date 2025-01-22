@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -46,11 +47,27 @@ public class TabController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Tab> updateCustomerName(@PathVariable Integer id, @RequestBody Tab updatedTab) {
+    public ResponseEntity<Tab> updateTab(@PathVariable Integer id, @RequestBody Tab updatedTab) {
         return tabRepository.findById(id).map(existingTab -> {
-            existingTab.setCustomer(updatedTab.getCustomer());
+            if (updatedTab.getCustomer() != null) {
+                existingTab.setCustomer(updatedTab.getCustomer());
+            }
+            if (updatedTab.getStatus() != null) {
+                existingTab.setStatus(updatedTab.getStatus());
+            }
             Tab savedTab = tabRepository.save(existingTab);
             return ResponseEntity.ok(savedTab);
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @PatchMapping("/{id}/close")
+    public ResponseEntity<Tab> closeTab(@PathVariable Integer id) {
+        return tabRepository.findById(id).map(existingTab -> {
+            existingTab.setStatus("closed");
+            existingTab.setClosedAt(LocalDateTime.now());
+            Tab savedTab = tabRepository.save(existingTab);
+            return ResponseEntity.ok(savedTab);
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
 }
