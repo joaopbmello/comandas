@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,23 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Endpoint para deletar um produto
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product product) {
+        return productRepository.findById(id)
+                .map(existingProduct -> {
+                    existingProduct.setName(product.getName());
+                    existingProduct.setPrice(product.getPrice());
+                    existingProduct.setProductCode(product.getProductCode());
+                    existingProduct.setImageUrl(product.getImageUrl());
+                    existingProduct.setUnitCost(product.getUnitCost());
+                    existingProduct.setGroupName(product.getGroupName());
+                    existingProduct.setUpdatedAt(LocalDateTime.now());
+                    productRepository.save(existingProduct);
+                    return ResponseEntity.ok(existingProduct);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
